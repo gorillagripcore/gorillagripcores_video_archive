@@ -23,9 +23,9 @@ h1 {
 }
 
 video {
-  width: 80%;
-  max-width: 600px;
-  height: auto;
+  height: 600px;
+  max-width: 400px;
+  width: auto;
   margin-bottom: 10px;
 }
 
