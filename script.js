@@ -3,22 +3,12 @@ const videoPlayer = document.getElementById("videoPlayer");
 const videoSource = document.getElementById("videoSource");
 const nextButton = document.getElementById("nextButton");
 
-const videoList = [];
+let videoList = [];
 
 async function fetchVideoList() {
-  const response = await fetch(videoFolder);
-  const data = await response.text();
-  const parser = new DOMParser();
-  const htmlDoc = parser.parseFromString(data, "text/html");
-
-  const links = htmlDoc.querySelectorAll("a");
-  links.forEach((link) => {
-    const href = link.getAttribute("href");
-    if (href.endsWith(".mp4")) {
-      videoList.push(href);
-    }
-  });
-
+  const response = await fetch("videos.json");
+  const data = await response.json();
+  videoList = data.videos;
   playRandomVideo();
 }
 
