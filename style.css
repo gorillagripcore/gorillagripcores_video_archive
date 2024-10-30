@@ -1,18 +1,44 @@
 body {
+  font-family: "dico-code-one", mono;
+  font-weight: 400;
+  font-style: normal;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 100vh;
-  background-color: #f0f0f0;
   margin: 0;
+  background-color: #000000;
 }
 
-.container {
-  text-align: center;
+h1 {
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 video {
   width: 80%;
   max-width: 600px;
-  border: 2px solid #333;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+button {
+  font-family: "dico-code-one", mono;
+  font-weight: 400;
+  font-style: normal;
+  padding: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  background-image: url("https://i.pinimg.com/564x/74/dd/81/74dd817ccf52f1fffa31096127892471.jpg");
+  background-size: cover;
+  color: #ffffff;
 }
