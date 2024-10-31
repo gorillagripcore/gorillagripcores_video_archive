@@ -11,39 +11,41 @@ async function fetchVideoList() {
     const response = await fetch("videos.json");
     const data = await response.json();
     videoList = data.videos;
+    shuffleArray(videoList);
     playedVideos.clear();
-    playRandomVideo();
+    playNextShuffledVideo();
   } catch (error) {
     console.error("Error fetching video list:", error);
   }
 }
 
-function playRandomVideo() {
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function playNextShuffledVideo() {
   if (playedVideos.size === videoList.length) {
-    fetchVideoList();
-    return;
+    playedVideos.clear();
+    shuffleArray(videoList); 
   }
 
-  let randomIndex;
-  do {
-    randomIndex = Math.floor(Math.random() * videoList.length);
-  } while (playedVideos.has(randomIndex));
-
-  playedVideos.add(randomIndex);
-  const randomVideo = videoList[randomIndex];
-  videoSource.src = videoFolder + randomVideo;
+  const videoIndex = playedVideos.size;
+  playedVideos.add(videoIndex);
+  const nextVideo = videoList[videoIndex];
+  videoSource.src = videoFolder + nextVideo;
 
   videoPlayer.load();
-
-  videoPlayer.oncanplaythrough = () => {
-    videoPlayer.play();
-  };
-
-  videoPlayer.onerror = (e) => {
-    console.error("Error loading video:", e);
+  videoPlayer.oncanplaythrough = () => videoPlayer.play();
+  
+  videoPlayer.onerror = () => {
+    console.error("Error loading video:", videoSource.src);
+    playNextShuffledVideo();
   };
 }
 
-nextButton.addEventListener("click", playRandomVideo);
+nextButton.addEventListener("click", playNextShuffledVideo);
 
 fetchVideoList();
